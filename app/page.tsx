@@ -485,7 +485,7 @@ export default function Home() {
                     <h3 className="text-2xl font-bold mb-4">Connect With Me</h3>
                     <div className="flex gap-4 mb-6">
                       <Button variant="outline" size="icon" asChild>
-                        <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
+                        <Link href="https://github.com/Ochk0" target="_blank" rel="noopener noreferrer">
                           <Github className="h-5 w-5" />
                           <span className="sr-only">GitHub</span>
                         </Link>
