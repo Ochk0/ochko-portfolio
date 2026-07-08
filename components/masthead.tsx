@@ -16,14 +16,14 @@ import {
 } from "@/components/ui/sheet"
 
 const SECTIONS = [
-  { numeral: "0x01", id: "index", label: "COVER STORIES" },
+  { numeral: "0x01", id: "index", label: "WRITEUPS" },
   { numeral: "0x02", id: "ledger", label: "DISCLOSURE LEDGER" },
-  { numeral: "0x03", id: "editor", label: "THE EDITOR" },
-  { numeral: "0x04", id: "history", label: "REVISION HISTORY" },
-  { numeral: "0x05", id: "classifieds", label: "CLASSIFIEDS" },
-  { numeral: "0x06", id: "scoreboard", label: "SCOREBOARD" },
-  { numeral: "0x07", id: "colophon", label: "COLOPHON" },
-  { numeral: "0x08", id: "letters", label: "LETTERS" },
+  { numeral: "0x03", id: "editor", label: "ABOUT" },
+  { numeral: "0x04", id: "history", label: "EXPERIENCE" },
+  { numeral: "0x05", id: "classifieds", label: "PROJECTS" },
+  { numeral: "0x06", id: "scoreboard", label: "CTF RECORD" },
+  { numeral: "0x07", id: "colophon", label: "STACK" },
+  { numeral: "0x08", id: "letters", label: "CONTACT" },
 ] as const
 
 export function Masthead({
@@ -40,7 +40,8 @@ export function Masthead({
   const { toggleShell, theme, setTheme } = usePress()
   const [held, setHeld] = useState(false)
 
-  const segment = `ISSUE #01 /// LAST COMMIT ${commit} /// BUILD ${buildDate} /// DISCLOSURES: ${publicCount} PUBLIC · ${embargoedCount} EMBARGOED /// NO GODS NO MASTERS NO CLOSED SOURCE /// PRESS ~ FOR THE SHELL /// `
+  void embargoedCount
+  const segment = `LAST COMMIT ${commit} /// BUILD ${buildDate} /// ${publicCount} WRITEUPS PUBLISHED /// NO GODS NO MASTERS NO CLOSED SOURCE /// PRESS ~ FOR THE SHELL /// `
 
   return (
     <header className="sticky top-0 z-50 h-12 border-b border-rule bg-tar/95 backdrop-blur-none">
@@ -48,9 +49,9 @@ export function Masthead({
         {/* Left - wordmark */}
         <a href="#top" className="flex items-baseline gap-2 whitespace-nowrap">
           <span className="font-display text-[16px] uppercase tracking-[-0.01em] leading-none">
-            SAMIZDAT
+            OCHK0
           </span>
-          <span className="meta hidden sm:inline">- OCHK0 PRESS</span>
+          <span className="meta hidden sm:inline">· SECURITY RESEARCH</span>
         </a>
 
         {/* Center - the ticker (pausable) */}
@@ -93,7 +94,7 @@ export function Masthead({
                   Contents
                 </SheetTitle>
                 <SheetDescription className="meta">
-                  SAMIZDAT - ISSUE #01
+                  OCHK0 · SECURITY RESEARCHER
                 </SheetDescription>
               </SheetHeader>
 
@@ -114,7 +115,7 @@ export function Masthead({
                     href="/writeups"
                     className="press-invert border-y border-rule px-2 py-3 font-mono text-[13px] uppercase"
                   >
-                    THE ARCHIVE → /writeups
+                    ALL WRITEUPS → /writeups
                   </a>
                 </SheetClose>
                 <a
@@ -128,7 +129,7 @@ export function Masthead({
               </nav>
 
               <div className="mt-6 border-t border-rule pt-4">
-                <p className="meta mb-3">EDITION</p>
+                <p className="meta mb-3">THEME</p>
                 <div className="flex gap-2">
                   <button
                     type="button"

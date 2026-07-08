@@ -6,7 +6,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 export const runtime = "nodejs"
-export const alt = "SAMIZDAT - Issue #01 - OCHK0 Press"
+export const alt = "ochk0 - Security Researcher & Full-Stack Engineer"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -96,7 +96,7 @@ export default function Image() {
               color: GRAPHITE,
             }}
           >
-            {"SAMIZDAT · ISSUE #01 · JUL 2026 · SELF-PUBLISHED"}
+            {"SECURITY RESEARCHER · FULL-STACK ENGINEER · UTC+8"}
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -141,7 +141,7 @@ export default function Image() {
               <div
                 style={{ display: "flex", fontSize: 18, letterSpacing: 2, color: GRAPHITE, marginTop: 6 }}
               >
-                0-DAY-PRESS-001
+                0-DAY-001
               </div>
             </div>
           </div>

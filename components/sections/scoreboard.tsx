@@ -17,8 +17,8 @@ export function Scoreboard() {
       id="scoreboard"
       index={6}
       numeral="0x06"
-      title="SCOREBOARD"
-      tagline="CAPTURE THE FLAG · FIELD RECORD"
+      title="CTF RECORD"
+      tagline="CAPTURE THE FLAG · INTERNATIONAL FINALS"
     >
       <div className="mt-12 overflow-x-auto">
         <Table className="tabular min-w-[640px] font-mono text-[13px]">

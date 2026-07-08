@@ -2,21 +2,9 @@ import { SectionFrame } from "@/components/section-frame"
 import { DecodeText } from "@/components/fx/decode-text"
 import { site } from "@/lib/site"
 
-const MONTHS = [
-  "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
-] as const
-
-function issueMonthYear(): string {
-  const build = process.env.NEXT_PUBLIC_BUILD_DATE ?? "2026-07-08"
-  const [year, month] = build.split("-")
-  const mon = MONTHS[(parseInt(month, 10) || 7) - 1] ?? "JUL"
-  return `${mon} ${year ?? "2026"}`
-}
-
 // Flag part 1/3 - a real HTML comment in the served markup. View source; that's what it's for.
 const FLAG_COMMENT =
-  "<!-- SAMIZDAT 1/3: flag{SAMIZ - the rest travels in headers and missing pages -->"
+  "<!-- ochk0 1/3: flag{OCHK0 - the rest travels in headers and missing pages -->"
 
 export function Cover() {
   return (
@@ -30,7 +18,7 @@ export function Cover() {
 
       {/* top: kicker */}
       <p className="meta pt-4">
-        SAMIZDAT · ISSUE #01 · {issueMonthYear()} · SELF-PUBLISHED
+        {site.name.toUpperCase()} · SECURITY RESEARCHER · {site.location.toUpperCase()}
       </p>
 
       {/* center: the masthead itself */}
@@ -53,12 +41,12 @@ export function Cover() {
         {/* bottom-left */}
         <div className="flex flex-col gap-2">
           <p className="font-mono text-[13px] uppercase tracking-[0.14em] text-newsprint">
-            UNCENSORED / UNCUT / UNEMPLOYED?<span className="text-arterial">*</span>
+            BUILDS SYSTEMS / BREAKS SYSTEMS / OPEN TO WORK<span className="text-arterial">*</span>
           </p>
           <p className="meta">
-            *HIRING INQUIRIES →{" "}
+            *HIRING →{" "}
             <a href="#letters" className="press-invert px-1 text-arterial">
-              LETTERS, p.08
+              CONTACT
             </a>
           </p>
         </div>
@@ -73,7 +61,7 @@ export function Cover() {
         {/* bottom-right */}
         <div className="flex flex-col items-start gap-2 sm:items-end">
           <div className="barcode" aria-hidden="true" />
-          <p className="meta">0-DAY-PRESS-001</p>
+          <p className="meta">0-DAY-001</p>
         </div>
       </div>
     </SectionFrame>

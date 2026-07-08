@@ -1,4 +1,4 @@
-// SAMIZDAT - single source of truth (server + client safe, no fs).
+// Single source of truth for the site (server + client safe, no fs).
 // Components import { site } from "@/lib/site" - never hardcode facts.
 
 export interface SiteData {
@@ -74,7 +74,7 @@ export const site: SiteData = {
     "This site has no trackers, no analytics, and no framework it doesn't need. View source; that's what it's for.",
   ],
   publishersNote:
-    "The editor breaks software politely and documents it ruthlessly. Three published CVEs (one critical), an Intel patch-bypass bounty, and five international CTF finals; vendors patch faster when he's on the CC line.",
+    "Ochko breaks software politely and documents it ruthlessly. Three published CVEs (one critical), an Intel patch-bypass bounty, and five international CTF finals; vendors patch faster when he's on the CC line.",
   skills: [
     {
       group: "EXPLOITATION",

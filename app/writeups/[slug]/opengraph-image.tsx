@@ -8,7 +8,7 @@ import path from "node:path"
 import { getAllWriteups, getWriteup } from "@/lib/writeups"
 
 export const runtime = "nodejs"
-export const alt = "SAMIZDAT disclosure - OCHK0 Press"
+export const alt = "ochk0 - vulnerability writeup"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -113,7 +113,7 @@ export default async function Image({ params }: { params: Promise<Params> }) {
           }}
         >
           <div style={{ display: "flex", fontSize: 24, letterSpacing: 3, color: GRAPHITE }}>
-            {"SAMIZDAT - OCHK0 PRESS · ISSUE #01"}
+            {"OCHK0 · SECURITY RESEARCH"}
           </div>
 
           <div
@@ -158,7 +158,7 @@ export default async function Image({ params }: { params: Promise<Params> }) {
                     overflow: "hidden",
                   }}
                 >
-                  {w ? w.title.toUpperCase() : "SAMIZDAT"}
+                  {w ? w.title.toUpperCase() : "OCHK0"}
                 </div>
 
                 {accent.length > 0 || trailing.length > 0 ? (
@@ -181,12 +181,12 @@ export default async function Image({ params }: { params: Promise<Params> }) {
             }}
           >
             <div style={{ display: "flex", fontSize: 20, letterSpacing: 2, color: GRAPHITE }}>
-              PRICE: 0x00 USD
+              ochko-portfolio.vercel.app
             </div>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
               <Barcode />
               <div style={{ display: "flex", fontSize: 18, letterSpacing: 2, color: GRAPHITE, marginTop: 6 }}>
-                0-DAY-PRESS-{number}
+                0-DAY-{number}
               </div>
             </div>
           </div>

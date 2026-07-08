@@ -9,7 +9,7 @@ import { site } from "@/lib/site"
 /**
  * FlagSlot - the scoreboard's CTF strip. Default: instructions for the three-part hunt.
  * Solved (from smz.flag / smz:flag-solved): a verified banner + a button that mints the
- * personalized PRESS CREDENTIAL PNG and triggers a download.
+ * personalized credential PNG and triggers a download.
  */
 export function FlagSlot() {
   const [rec, setRec] = useState<FlagRecord | null>(null)
@@ -37,7 +37,7 @@ export function FlagSlot() {
       })
       const a = document.createElement("a")
       a.href = url
-      a.download = "samizdat-press-credential.png"
+      a.download = "ochk0-credential.png"
       document.body.appendChild(a)
       a.click()
       a.remove()
@@ -59,7 +59,7 @@ export function FlagSlot() {
           disabled={minting}
           className="press-invert mt-4 border border-arterial px-4 py-2 font-mono text-[13px] uppercase tracking-[0.18em] text-arterial disabled:opacity-60"
         >
-          {minting ? "[ MINTING… ]" : "[ DOWNLOAD PRESS CREDENTIAL ]"}
+          {minting ? "[ MINTING… ]" : "[ DOWNLOAD CREDENTIAL ]"}
         </button>
       </div>
     )

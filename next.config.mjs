@@ -30,7 +30,7 @@ const nextConfig = {
           {
             // flag part 2/3 — robots.txt points here
             key: "X-Flag-Part",
-            value: "DAT_NEVER (2/3 - first is in the source, last is on the missing page)",
+            value: "_NEVER (2/3 - first is in the source, last is on the missing page)",
           },
         ],
       },

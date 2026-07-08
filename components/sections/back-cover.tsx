@@ -12,7 +12,7 @@ export function BackCover() {
         </div>
 
         <p className="mt-6 font-mono text-[13px] text-newsprint">
-          SAMIZDAT - ISSUE #01 - PRINT RUN: UNLIMITED - PRICE: 0x00 USD
+          OCHK0 · {site.role.toUpperCase()}
         </p>
 
         <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
@@ -21,11 +21,11 @@ export function BackCover() {
         </div>
 
         <p className="mt-4 font-mono text-[13px] text-graphite">
-          press ~ to talk to the press
+          press ~ for the shell
         </p>
 
         <p className="meta mt-6">
-          © 2026 OCHK0 PRESS - NO GODS, NO MASTERS, NO CLOSED SOURCE ·{" "}
+          © 2026 OCHK0 · NO GODS, NO MASTERS, NO CLOSED SOURCE ·{" "}
           <a
             href={site.github}
             target="_blank"
@@ -34,10 +34,6 @@ export function BackCover() {
           >
             VIEW SOURCE ↗
           </a>
-        </p>
-
-        <p className="only-print meta mt-4">
-          PRINT RUN: 1 OF 1 - HAND-DELIVERED - REDACTIONS BINDING
         </p>
       </div>
     </footer>

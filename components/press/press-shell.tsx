@@ -1,6 +1,6 @@
 "use client"
 
-// SAMIZDAT - THE PRESS SHELL. Lazy-loaded terminal (dynamic, ssr:false).
+// The shell. Lazy-loaded terminal (dynamic, ssr:false).
 // Bottom sheet built on Radix Dialog (no overlay dim, no rounded corners).
 // The terminal is ALWAYS ink - void field / newsprint text - regardless of the
 // page theme. We re-establish the ink CSS variables on the shell subtree (HSL
@@ -37,7 +37,7 @@ type Mode = "command" | "handle"
 const ln = (text: string, c?: Tone): Line => ({ segs: [{ t: text, c }] })
 const lseg = (segs: Seg[], extra?: Omit<Line, "segs">): Line => ({ segs, ...extra })
 
-const PROMPT = "visitor@samizdat:~$ "
+const PROMPT = "visitor@ochk0:~$ "
 const CAP = 300
 
 const COMMANDS = [
@@ -47,15 +47,27 @@ const COMMANDS = [
 ]
 
 const SECTIONS: { id: string; num: string; desc: string }[] = [
-  { id: "index", num: "0x01", desc: "cover stories" },
+  { id: "index", num: "0x01", desc: "writeups" },
   { id: "ledger", num: "0x02", desc: "disclosure ledger" },
-  { id: "editor", num: "0x03", desc: "the editor" },
-  { id: "history", num: "0x04", desc: "revision history" },
-  { id: "classifieds", num: "0x05", desc: "classifieds" },
-  { id: "scoreboard", num: "0x06", desc: "scoreboard" },
-  { id: "colophon", num: "0x07", desc: "colophon" },
-  { id: "letters", num: "0x08", desc: "letters" },
+  { id: "editor", num: "0x03", desc: "about" },
+  { id: "history", num: "0x04", desc: "experience" },
+  { id: "classifieds", num: "0x05", desc: "projects" },
+  { id: "scoreboard", num: "0x06", desc: "ctf record" },
+  { id: "colophon", num: "0x07", desc: "stack" },
+  { id: "letters", num: "0x08", desc: "contact" },
 ]
+
+// friendly aliases so `open about` works even though the anchor id is #editor
+const SECTION_ALIAS: Record<string, string> = {
+  writeups: "index",
+  about: "editor",
+  experience: "history",
+  projects: "classifieds",
+  ctf: "scoreboard",
+  stack: "colophon",
+  contact: "letters",
+  home: "cover",
+}
 const OPEN_IDS = ["cover", ...SECTIONS.map((s) => s.id), "archive"]
 
 const CHIPS = ["help", "ls writeups", "open ledger", "theme paper", "sudo"]
@@ -151,7 +163,7 @@ function initState(): State {
   }
   return {
     lines: [
-      ln("SAMIZDAT PRESS SHELL - v1.0"),
+      ln("ochk0 shell - v1.0"),
       ln("type help for the manifest. esc to close.", "graphite"),
     ],
     queue: [],
@@ -243,15 +255,15 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
 
   function helpLines(): Line[] {
     return [
-      ln("SAMIZDAT PRESS SHELL - v1.0"),
+      ln("ochk0 shell - v1.0"),
       ln("  ls [writeups] - sections / the archive"),
       ln("  cat <slug> - read an abstract"),
       ln("  open <section> - jump the page"),
       ln("  whoami"),
       ln("  pgp - public key, copied"),
-      ln("  contact - reach the editor"),
+      ln("  contact - reach me"),
       ln("  resume - the personnel file (pdf)"),
-      ln("  theme paper|ink - printed / ink edition"),
+      ln("  theme paper|ink - light / dark"),
       ln("  date"),
       ln("  history"),
       ln("  clear"),
@@ -316,7 +328,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
       ln(`mail      → ${site.email}`),
       ln(`github    → ${site.github}`),
       ln(`intigriti → ${site.intigriti}`),
-      ln("desk      → open letters"),
+      ln("here      → open contact"),
     ]
   }
 
@@ -330,7 +342,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
       ln("GLIBC_2.34"),
       ln("coffee.overflow.ok"),
       ln("/robots.txt has opinions", "graphite"),
-      ln("$Id: ochk0 issue-01 $"),
+      ln("$Id: ochk0 portfolio $"),
     ]
   }
 
@@ -367,7 +379,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
     if (arg === "paper") {
       if (theme === "paper") return { output: [ln("already on paper.")] }
       return {
-        output: [ln("printed edition engaged. easy on the eyes, heavy on the hands.")],
+        output: [ln("paper theme on. easy on the eyes.")],
         effect: () => setTheme("paper"),
       }
     }
@@ -429,20 +441,21 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
 
   function openSection(arg: string): Result {
     if (!arg) return { output: [ln("usage: open <section> - try: open ledger")] }
-    if (!OPEN_IDS.includes(arg)) return { output: [ln(`not in this issue: ${arg}`)] }
+    const id = SECTION_ALIAS[arg] ?? arg
+    if (!OPEN_IDS.includes(id)) return { output: [ln(`no section here: ${arg}`)] }
     return {
-      output: [ln("turning to page…", "graphite")],
+      output: [ln("jumping…", "graphite")],
       effect: () =>
         later(() => {
           closeShell()
-          if (arg === "archive") {
+          if (id === "archive") {
             router.push("/writeups")
             return
           }
           requestAnimationFrame(() => {
-            const el = document.getElementById(arg)
+            const el = document.getElementById(id)
             if (el) el.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" })
-            else router.push(`/#${arg}`)
+            else router.push(`/#${id}`)
           })
         }, 150),
     }
@@ -470,7 +483,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
     return {
       output: [
         ln("SOURCE VERIFIED.", "arterial"),
-        ln("the press protects those who read the whole page."),
+        ln("you read the whole thing. respect."),
         ln("enter a handle for your press credential:", "graphite"),
       ],
       mode: "handle",
@@ -512,7 +525,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
         return { output: [], effect: () => dispatch({ type: "clear" }) }
       case "exit":
         return {
-          output: [ln("uplink cut. the presses keep running.")],
+          output: [ln("uplink cut. later.")],
           effect: () => later(() => closeShell(), 300),
         }
       case "sudo":
@@ -522,7 +535,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
       case "strings":
         return arg === "/dev/editor"
           ? { output: stringsLines() }
-          : { output: [ln(`not in this issue: ${input}`)] }
+          : { output: [ln(`command not found: ${input}`)] }
       case "credential":
         return credentialCmd()
       case "flag":
@@ -533,9 +546,9 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
         }
       default:
         if (/^rm\s+-rf\s+\/\*?$/.test(input)) return rmTheater()
-        if (cmd === "rm") return { output: [ln("removal is not journalism.")] }
+        if (cmd === "rm") return { output: [ln("not happening.")] }
         if (input.startsWith("flag{")) return flagAttempt(input)
-        return { output: [ln(`not in this issue: ${input}`)] }
+        return { output: [ln(`command not found: ${input}`)] }
     }
   }
 
@@ -551,7 +564,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
       type: "run",
       echo: lseg([{ t: "handle: ", c: "graphite" }, { t: raw }]),
       output: [
-        ln(`PRESS CREDENTIAL ISSUED - ${handleName} - SESSION ${session}`),
+        ln(`ACCESS CREDENTIAL - ${handleName} - SESSION ${session}`),
         lseg([{ t: "> download credential", c: "arterial" }], { action: "download" }),
       ],
       mode: "command",
@@ -714,7 +727,7 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
       })
       const a = document.createElement("a")
       a.href = url
-      a.download = "samizdat-press-credential.png"
+      a.download = "ochk0-credential.png"
       document.body.appendChild(a)
       a.click()
       a.remove()
@@ -794,13 +807,13 @@ export default function PressShell({ writeups }: { writeups: WriteupMeta[] }) {
           onPointerDownOutside={(e) => e.preventDefault()}
           className="fixed inset-x-0 bottom-0 z-[80] flex h-[45vh] max-md:h-[50dvh] flex-col border-t border-arterial bg-void font-mono text-[14px] leading-[1.6] text-newsprint focus:outline-none"
         >
-          <DialogPrimitive.Title className="sr-only">SAMIZDAT Press Shell</DialogPrimitive.Title>
+          <DialogPrimitive.Title className="sr-only">ochk0 shell</DialogPrimitive.Title>
           <DialogPrimitive.Description className="sr-only">
             Interactive terminal. Type help for commands. Press Escape to close.
           </DialogPrimitive.Description>
 
           <DialogPrimitive.Close
-            aria-label="Close the press shell"
+            aria-label="Close the shell"
             className="absolute right-2 top-2 z-[81] border border-rule p-2 press-invert"
           >
             <X size={14} strokeWidth={1.5} />

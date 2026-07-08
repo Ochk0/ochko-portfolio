@@ -8,7 +8,7 @@ export function Letters() {
       id="letters"
       index={8}
       numeral="0x08"
-      title="LETTERS TO THE EDITOR"
+      title="CONTACT"
       tagline="PLAINTEXT TIPS ACCEPTED. ENCRYPTED TIPS RESPECTED."
     >
       <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">

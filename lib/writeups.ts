@@ -42,7 +42,7 @@ function slugify(s: string): string {
     .replace(/^-+|-+$/g, "")
 }
 
-// Version-independent: post-process marked's stable HTML output into the SAMIZDAT contract.
+// Version-independent: post-process marked's stable HTML output into the writeup contract.
 function renderContract(md: string): string {
   let html = marked.parse(md, { async: false }) as string
 

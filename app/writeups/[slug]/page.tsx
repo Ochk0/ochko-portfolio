@@ -135,7 +135,7 @@ function Embargoed({ w }: { w: Writeup }) {
       </div>
 
       <div className="relative mt-10 max-w-[720px]">
-        <p className="meta">DISCLOSURE {no} · EMBARGOED</p>
+        <p className="meta">WRITEUP {no} · EMBARGOED</p>
 
         <div className="mt-6 flex flex-col gap-4">
           <Redacted length={26} label="Embargoed disclosure" className="text-[clamp(1.75rem,5vw,3.25rem)]" />
@@ -160,7 +160,7 @@ function Embargoed({ w }: { w: Writeup }) {
           href="/"
           className="press-invert mt-12 inline-block border border-rule px-4 py-3 font-mono text-[14px] uppercase tracking-[0.14em] text-newsprint"
         >
-          ← FRONT PAGE
+          ← ALL WRITEUPS
         </a>
       </div>
     </main>
@@ -183,7 +183,7 @@ function NavCell({
       }`}
     >
       <span className="meta">
-        {dir === "prev" ? `← PAGE ${no}` : `PAGE ${no} →`}
+        {dir === "prev" ? `← WRITEUP ${no}` : `WRITEUP ${no} →`}
       </span>
       <span className="font-mono text-[14px] text-newsprint">{w.title}</span>
     </a>
@@ -215,7 +215,7 @@ export default async function WriteupPage({
   return (
     <main id="top" className="container-press py-16 md:py-24">
       <a href="/writeups" className="press-invert inline-block meta">
-        ← THE ARCHIVE
+        ← ALL WRITEUPS
       </a>
 
       <article className="article-grid mt-8">
@@ -227,7 +227,7 @@ export default async function WriteupPage({
             {no}
           </span>
           <p className="meta">
-            DISCLOSURE {no} · {w.type.toUpperCase()} · {w.date}
+            WRITEUP {no} · {w.type.toUpperCase()} · {w.date}
           </p>
           <h1 className="mt-3 max-w-[16ch] font-display uppercase tracking-[-0.01em] leading-[0.92] text-[clamp(2.25rem,6vw,4.5rem)] text-newsprint">
             {w.title}

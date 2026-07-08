@@ -1,16 +1,16 @@
 "use client"
 
-// PressBoot - a ≤900ms print-registration overlay laid over the already
-// server-rendered page. Session-gated, skipped under reduced motion, and
-// dismissable by any input. Never gates paint; the issue prints beneath it.
+// PressBoot - a ≤900ms boot overlay laid over the already server-rendered page.
+// Session-gated, skipped under reduced motion, and dismissable by any input.
+// Never gates paint; the page renders beneath it.
 import { useEffect, useState } from "react"
 import { SS } from "@/lib/press"
 
 const LINES = [
-  "SETTING TYPE .......... OK",
-  "INKING ROLLERS ........ OK",
-  "REGISTRATION .......... ALIGNED",
-  "PRESS RUN - ISSUE #01 . GO",
+  "INIT .................. OK",
+  "MOUNT /home/ochk0 ..... OK",
+  "LOAD WRITEUPS ......... OK",
+  "READY ................. GO",
 ]
 
 export function PressBoot() {

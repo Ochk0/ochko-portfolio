@@ -12,10 +12,11 @@ import { BackCover } from "@/components/sections/back-cover"
 export const metadata: Metadata = {
   metadataBase: new URL("https://ochko-portfolio.vercel.app"),
   title: {
-    default: "SAMIZDAT - ISSUE #01 - OCHK0 PRESS",
-    template: "%s - SAMIZDAT",
+    default: "ochk0 · Security Researcher & Full-Stack Engineer",
+    template: "%s · ochk0",
   },
-  description: "Security research & full-stack engineering. Writeups, disclosures, receipts.",
+  description:
+    "Erdene-Och Byambabayar (ochk0): security researcher and full-stack engineer. Published CVEs, international CTF finals, and vulnerability writeups.",
 }
 
 // Prevent paper-theme flash of the wrong edition.

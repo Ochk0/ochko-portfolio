@@ -18,11 +18,11 @@ export function Colophon({ writeups }: { writeups: WriteupMeta[] }) {
       id="colophon"
       index={7}
       numeral="0x07"
-      title="COLOPHON"
-      tagline="TYPE, TOOLING, AND NO TRACKERS"
+      title="STACK"
+      tagline="TOOLING, AND NO TRACKERS"
     >
       <div className="mt-12 border border-rule bg-void p-5 font-mono text-[14px] leading-[1.9] md:p-8">
-        <p className="text-graphite"># SAMIZDAT MANIFEST - lockfileVersion 1</p>
+        <p className="text-graphite"># ochk0.stack - lockfileVersion 1</p>
 
         <div className="mt-6 space-y-5">
           {site.skills.map((group) => (
@@ -56,8 +56,7 @@ export function Colophon({ writeups }: { writeups: WriteupMeta[] }) {
         </p>
 
         <p className="meta mt-6">
-          THIS ISSUE WAS SET IN ANTON &amp; IBM PLEX MONO. NO TRACKERS. NO
-          ANALYTICS.{" "}
+          BUILT WITH ANTON &amp; IBM PLEX MONO. NO TRACKERS. NO ANALYTICS.{" "}
           <a
             href={site.github}
             target="_blank"

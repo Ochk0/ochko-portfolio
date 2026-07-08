@@ -107,7 +107,7 @@ export function IndexToc({ writeups }: { writeups: WriteupMeta[] }) {
       id="index"
       index={1}
       numeral="0x01"
-      title="COVER STORIES"
+      title="WRITEUPS"
       tagline="PUBLISHED VULNERABILITY RESEARCH · AND THE PRACTICE BEHIND IT"
     >
       <div className="mt-10">

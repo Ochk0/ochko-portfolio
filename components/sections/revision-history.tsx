@@ -7,8 +7,8 @@ export function RevisionHistory() {
       id="history"
       index={4}
       numeral="0x04"
-      title="REVISION HISTORY"
-      tagline="THE EDITOR, VERSION-CONTROLLED"
+      title="EXPERIENCE"
+      tagline="MY CAREER AS A GIT LOG"
     >
       <figure className="listing mt-12 overflow-x-auto">
         <figcaption>

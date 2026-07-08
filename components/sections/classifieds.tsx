@@ -8,7 +8,7 @@ export function Classifieds() {
       id="classifieds"
       index={5}
       numeral="0x05"
-      title="CLASSIFIEDS"
+      title="PROJECTS"
       tagline="THINGS BUILT FOR MONEY, PRACTICE, OR SPITE"
     >
       <div className="mt-12 grid grid-cols-1 gap-px bg-rule md:grid-cols-2">
@@ -18,7 +18,7 @@ export function Classifieds() {
             className="flex flex-col border border-rule bg-tar p-5 transition-none hover:border-arterial"
           >
             <header className="flex items-center justify-between">
-              <span className="meta">AD {String(i + 1).padStart(3, "0")}</span>
+              <span className="meta">PROJECT {String(i + 1).padStart(3, "0")}</span>
               <span className={project.status === "LIVE" ? "meta text-arterial" : "meta"}>
                 {project.status}
               </span>

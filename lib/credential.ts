@@ -1,4 +1,4 @@
-// Client util: mint a personalized PRESS CREDENTIAL PNG. Every solver's screenshot is unique.
+// Client util: mint a personalized ACCESS CREDENTIAL PNG. Every solver's screenshot is unique.
 // Returns a data URL. Canvas is @2x (1600x1000) of an 800x500 card.
 
 export async function mintCredentialPNG(i: {
@@ -47,7 +47,7 @@ export async function mintCredentialPNG(i: {
   ctx.fillStyle = "#000000"
   ctx.font = `${44 * S}px ${displayFont}`
   ctx.textBaseline = "middle"
-  ctx.fillText("SAMIZDAT PRESS CREDENTIAL", inset + 28 * S, inset + bandH / 2)
+  ctx.fillText("OCHK0 · ACCESS CREDENTIAL", inset + 28 * S, inset + bandH / 2)
 
   // handle
   ctx.fillStyle = NEWSPRINT
@@ -60,8 +60,8 @@ export async function mintCredentialPNG(i: {
   ctx.font = `${22 * S}px ${monoFont}`
   ctx.fillStyle = NEWSPRINT
   const rows = [
-    "CLEARANCE: SOURCE - VERIFIED",
-    `ISSUE #${i.issue} - FLAG RECOVERED`,
+    "CLEARANCE: SOURCE VERIFIED",
+    "FLAG RECOVERED - FULL READ",
     `SESSION ${i.session} · ${i.solvedAt.toISOString().slice(0, 19).replace("T", " ")}Z`,
   ]
   let ry = inset + bandH + 210 * S
@@ -87,7 +87,7 @@ export async function mintCredentialPNG(i: {
   }
   ctx.font = `${16 * S}px ${monoFont}`
   ctx.fillStyle = GRAPHITE
-  ctx.fillText("0-DAY-PRESS-CRED-001", bcX, bcY + bcH + 26 * S)
+  ctx.fillText("0-DAY-CRED-001", bcX, bcY + bcH + 26 * S)
 
   return canvas.toDataURL("image/png")
 }
