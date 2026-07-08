@@ -1,14 +1,10 @@
-let userConfig = undefined
+import { execSync } from "node:child_process"
+
+let commit = "deadbee"
 try {
-  // try to import ESM first
-  userConfig = await import('./v0-user-next.config.mjs')
-} catch (e) {
-  try {
-    // fallback to CJS import
-    userConfig = await import("./v0-user-next.config");
-  } catch (innerError) {
-    // ignore error
-  }
+  commit = execSync("git rev-parse --short HEAD").toString().trim()
+} catch {
+  // not a git checkout (e.g. some CI) — keep the placeholder
 }
 
 /** @type {import('next').NextConfig} */
@@ -22,30 +18,24 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
-    parallelServerCompiles: true,
+  env: {
+    NEXT_PUBLIC_COMMIT: commit,
+    NEXT_PUBLIC_BUILD_DATE: new Date().toISOString().slice(0, 10),
   },
-}
-
-if (userConfig) {
-  // ESM imports will have a "default" property
-  const config = userConfig.default || userConfig
-
-  for (const key in config) {
-    if (
-      typeof nextConfig[key] === 'object' &&
-      !Array.isArray(nextConfig[key])
-    ) {
-      nextConfig[key] = {
-        ...nextConfig[key],
-        ...config[key],
-      }
-    } else {
-      nextConfig[key] = config[key]
-    }
-  }
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            // flag part 2/3 — robots.txt points here
+            key: "X-Flag-Part",
+            value: "DAT_NEVER (2/3 - first is in the source, last is on the missing page)",
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default nextConfig

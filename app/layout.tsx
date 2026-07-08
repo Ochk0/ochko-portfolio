@@ -1,33 +1,55 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-
-const inter = Inter({ subsets: ["latin"] })
+import { anton, plexMono } from "./fonts"
+import { getAllWriteups, counts } from "@/lib/writeups"
+import { PressProvider } from "@/components/press/press-provider"
+import { PressBoot } from "@/components/press/press-boot"
+import { PressGrain } from "@/components/press/press-grain"
+import { Masthead } from "@/components/masthead"
+import { BackCover } from "@/components/sections/back-cover"
 
 export const metadata: Metadata = {
-  title: "Ochko Portfolio",
-  description: "My humble portfolio website at your service!",
+  metadataBase: new URL("https://ochko-portfolio.vercel.app"),
+  title: {
+    default: "SAMIZDAT - ISSUE #01 - OCHK0 PRESS",
+    template: "%s - SAMIZDAT",
+  },
+  description: "Security research & full-stack engineering. Writeups, disclosures, receipts.",
 }
+
+// Prevent paper-theme flash of the wrong edition.
+const themeScript = `(function(){try{var t=localStorage.getItem("smz.theme");if(t==="paper"){document.documentElement.dataset.theme="paper";}}catch(e){}})();`
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+  const metas = getAllWriteups()
+  const c = counts()
+  const commit = process.env.NEXT_PUBLIC_COMMIT ?? "deadbee"
+  const buildDate = process.env.NEXT_PUBLIC_BUILD_DATE ?? "2026-07-08"
+
   return (
-    <html lang="en" className="dark" style={{ colorScheme: "dark" }} suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className={`${anton.variable} ${plexMono.variable} font-mono bg-tar text-newsprint antialiased`}>
+        <a href="#top" className="skip-link">
+          SKIP TO THE ISSUE
+        </a>
+        <PressProvider writeups={metas}>
+          <PressBoot />
+          <Masthead
+            commit={commit}
+            buildDate={buildDate}
+            publicCount={c.public}
+            embargoedCount={c.embargoed}
+          />
           {children}
-        </ThemeProvider>
+          <BackCover />
+          <PressGrain />
+        </PressProvider>
       </body>
     </html>
   )

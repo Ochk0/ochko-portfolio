@@ -4,191 +4,302 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 263.4 70% 50.4%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 263.4 70% 50.4%;
-    --radius: 0.5rem;
+    /* ink edition (default) */
+ --background: 0 0% 4.3%;          /* tar        #0B0B0B */
+ --foreground: 45 14.8% 89.4%;     /* newsprint  #E8E6E0 */
+ --card: 0 0% 5.5%;                /*            #0E0E0E */
+ --card-foreground: 45 14.8% 89.4%;
+ --popover: 0 0% 0%;               /* void       #000000 */
+ --popover-foreground: 45 14.8% 89.4%;
+ --primary: 12 100% 50%;           /* arterial   #FF3300 */
+ --primary-foreground: 0 0% 0%;
+ --secondary: 0 0% 10.2%;          /*            #1A1A1A */
+ --secondary-foreground: 45 14.8% 89.4%;
+ --muted: 0 0% 7.1%;               /*            #121212 */
+ --muted-foreground: 46.2 5.3% 47.6%; /* graphite #807D73 */
+ --accent: 12 100% 50%;            /* hover = arterial inversion */
+ --accent-foreground: 0 0% 0%;
+ --destructive: 12 100% 50%;
+ --destructive-foreground: 0 0% 0%;
+ --border: 0 0% 13.7%;             /* rule       #232323 */
+ --input: 0 0% 13.7%;
+ --ring: 12 100% 50%;
+ --radius: 0rem;                   /* the zine has no rounded corners. ever. */
+
+    /* extra tokens (semantic aliases used by utilities) */
+ --void: 0 0% 0%;                  /* NEVER overridden by paper theme */
+ --arterial: 12 100% 50%;
+ --graphite: 46.2 5.3% 47.6%;
+ --selection-fg: 0 0% 0%;
+ --grain-opacity: 0.05;
   }
 
-  .dark {
-    /* More vibrant cyberpunk-themed dark mode */
-    --background: 230 25% 5%;
-    --foreground: 210 40% 98%;
-
-    --card: 230 30% 7%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 230 25% 5%;
-    --popover-foreground: 210 40% 98%;
-
-    /* Vibrant neon purple */
-    --primary: 280 100% 65%;
-    --primary-foreground: 210 40% 98%;
-
-    /* Neon blue for secondary elements */
-    --secondary: 195 80% 60%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 230 25% 12%;
-    --muted-foreground: 210 40% 80%;
-
-    /* Neon green for accents */
-    --accent: 140 80% 55%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 90% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 230 25% 15%;
-    --input: 230 25% 15%;
-    --ring: 280 100% 65%;
+  [data-theme="paper"] {
+    /* "printed edition" - set via shell `theme paper`, persisted */
+ --background: 45 14.8% 89.4%;
+ --foreground: 0 0% 4.3%;
+ --card: 45 12% 86%;
+ --card-foreground: 0 0% 4.3%;
+ --popover: 45 14.8% 89.4%;
+ --popover-foreground: 0 0% 4.3%;
+ --primary: 9.9 100% 35.5%;        /* dark arterial #B51E00 - 5.34:1 on paper */
+ --primary-foreground: 45 14.8% 89.4%;
+ --secondary: 45 10% 82%;
+ --secondary-foreground: 0 0% 4.3%;
+ --muted: 45 10% 84%;
+ --muted-foreground: 43.6 6.9% 31.2%; /* dark graphite #55524A - 6.25:1 */
+ --accent: 9.9 100% 35.5%;
+ --accent-foreground: 45 14.8% 89.4%;
+ --border: 45 8% 74%;
+ --input: 45 8% 74%;
+ --ring: 9.9 100% 35.5%;
+ --arterial: 9.9 100% 35.5%;
+ --graphite: 43.6 6.9% 31.2%;
+ --selection-fg: 45 14.8% 89.4%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
   body {
-    @apply bg-background text-foreground;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    overflow-x: clip;
+  }
+  ::selection {
+    background: hsl(var(--arterial));
+    color: hsl(var(--selection-fg));
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--arterial));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px hsl(var(--arterial) / 0.08); /* the sanctioned tint */
+  }
+  * { scrollbar-width: thin; scrollbar-color: hsl(var(--border)) hsl(var(--background)); }
+}
+
+@layer components {
+  /* ---------- layout ---------- */
+  .container-press { @apply mx-auto max-w-[1200px] px-5 md:px-10; }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110]
+      focus:bg-arterial focus:px-4 focus:py-2 focus:font-mono focus:text-[13px]
+      focus:uppercase focus:tracking-[0.18em] focus:text-void;
+  }
+
+  .meta {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-graphite;
+  }
+
+  /* crop/registration marks - SectionFrame renders 4 <span class="crop crop-XX" aria-hidden> */
+  .crop { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+  .crop-tl { top: 0; left: 0; border-top: 1px solid hsl(var(--border)); border-left: 1px solid hsl(var(--border)); }
+  .crop-tr { top: 0; right: 0; border-top: 1px solid hsl(var(--border)); border-right: 1px solid hsl(var(--border)); }
+  .crop-bl { bottom: 0; left: 0; border-bottom: 1px solid hsl(var(--border)); border-left: 1px solid hsl(var(--border)); }
+  .crop-br { bottom: 0; right: 0; border-bottom: 1px solid hsl(var(--border)); border-right: 1px solid hsl(var(--border)); }
+
+  .ascii-divider {
+    @apply select-none overflow-hidden whitespace-pre font-mono text-[12px] leading-none text-graphite/60;
+  }
+
+  .ghost-numeral {
+    @apply pointer-events-none select-none font-display leading-none text-transparent;
+ -webkit-text-stroke: 1px hsl(var(--border));
+  }
+
+  /* ---------- interaction ---------- */
+  /* instant arterial inversion; apply to <a>/<button>/rows. children must use color:inherit */
+  .press-invert { transition: none; }
+  .press-invert:hover, .press-invert:focus-visible {
+    background: hsl(var(--arterial));
+    color: hsl(var(--void));
+  }
+  .press-invert:hover .meta, .press-invert:focus-visible .meta,
+  .press-invert:hover .text-graphite, .press-invert:focus-visible .text-graphite,
+  .press-invert:hover .text-newsprint, .press-invert:focus-visible .text-newsprint,
+  .press-invert:hover .text-arterial, .press-invert:focus-visible .text-arterial {
+    color: inherit;
+  }
+
+  .blink { animation: kf-blink 1s steps(1) infinite; }
+
+  /* ---------- redaction ---------- */
+  /* content is literal █ glyphs; copy/paste keeps the secret. NEVER reveals. */
+  .redact {
+    background: hsl(var(--void));
+    color: hsl(var(--void));
+    padding: 0 0.25em;
+    box-decoration-break: clone;
+ -webkit-box-decoration-break: clone;
+    print-color-adjust: exact;
+ -webkit-print-color-adjust: exact;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .redact:hover { animation: kf-redact-flicker 240ms steps(3) 1; }
+  }
+
+  /* ---------- stamp ---------- */
+  .stamp {
+    @apply inline-block font-display uppercase tracking-[0.08em] text-arterial;
+    border: 2px solid hsl(var(--arterial));
+    padding: 0.1em 0.45em;
+    transform: rotate(var(--stamp-angle, -6deg));
+  }
+  .stamp[data-in="true"] { animation: kf-stamp-in 180ms steps(3) both; }
+
+  /* ---------- masthead ticker (track holds TWO identical copies of the segment string) ---------- */
+  .ticker { @apply overflow-hidden whitespace-nowrap; }
+  .ticker-track {
+    @apply inline-flex will-change-transform;
+    animation: kf-ticker 36s linear infinite;
+  }
+  .ticker[data-held="true"] .ticker-track { animation-play-state: paused; }
+
+  /* ---------- TOC row marquee (track holds FOUR identical copies; loop = -25%) ---------- */
+  .marquee { display: none; position: absolute; inset: 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track {
+    @apply inline-flex w-max items-center will-change-transform;
+    animation: kf-marquee 7s linear infinite;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .toc-row:hover .row-title, .toc-row:focus-visible .row-title { visibility: hidden; }
+    .toc-row:hover .marquee, .toc-row:focus-visible .marquee { display: flex; align-items: center; }
+  }
+
+  /* ---------- hero printhead rule ---------- */
+  .printhead {
+    height: 2px; background: hsl(var(--arterial)); transform-origin: left;
+    animation: kf-printhead 700ms steps(12) both;
+  }
+
+  /* ---------- barcode (pure CSS) ---------- */
+  .barcode {
+    height: 44px; width: 140px;
+    background: repeating-linear-gradient(90deg,
+      hsl(var(--foreground)) 0 2px, transparent 2px 5px,
+      hsl(var(--foreground)) 5px 6px, transparent 6px 11px,
+      hsl(var(--foreground)) 11px 15px, transparent 15px 18px);
+  }
+
+  /* ---------- code listings (emitted by lib/writeups.ts renderer AND used by RevisionHistory) ---------- */
+  .listing { @apply my-8 border border-rule bg-void; }
+  .listing > figcaption {
+    @apply flex items-center justify-between border-b border-rule px-4 py-2 font-mono
+      text-[11px] uppercase tracking-[0.18em] text-graphite;
+  }
+  .listing pre { @apply overflow-x-auto p-4 font-mono text-[13px] leading-[1.6] text-newsprint; }
+  .copy-bytes { @apply font-mono text-[11px] uppercase tracking-[0.18em] cursor-pointer text-arterial; transition: none; }
+  .copy-bytes:hover { color: hsl(var(--foreground)); }
+
+  /* ---------- sudo flash ---------- */
+  .sudo-flash {
+    position: fixed; inset: 0; z-index: 90; pointer-events: none;
+    background: hsl(var(--arterial));
+    animation: kf-flash 120ms steps(1) both;
+  }
+
+  /* ---------- rm -rf theater ---------- */
+  main > section {
+    transform-origin: top;
+    transition: transform 240ms steps(4);
+    transition-delay: calc(var(--sec-i, 0) * 60ms);
+  }
+  body[data-destroyed="true"] main > section { transform: scaleY(0); }
+
+  /* ---------- print-only ---------- */
+  .only-print { display: none; }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@keyframes kf-blink { 50% { opacity: 0; } }
+@keyframes kf-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes kf-marquee { from { transform: translateX(0); } to { transform: translateX(-25%); } }
+@keyframes kf-redact-flicker { 0% { opacity: 1; } 34% { opacity: 0.45; } 67% { opacity: 1; } 100% { opacity: 0.7; } }
+@keyframes kf-stamp-in {
+  0% { transform: rotate(var(--stamp-angle, -6deg)) scale(2.2); opacity: 0; }
+  100% { transform: rotate(var(--stamp-angle, -6deg)) scale(1); opacity: 1; }
+}
+@keyframes kf-flash { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes kf-printhead { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ---------- article prose (rendered from marked output) ---------- */
+.prose-press { max-width: 68ch; font-size: 17px; line-height: 1.8; counter-reset: h2c listing; }
+.prose-press p { margin: 1.25em 0; }
+.prose-press > p:first-of-type::first-letter {
+  font-family: var(--font-display); float: left; font-size: 4.2em; line-height: 0.8;
+  padding-right: 0.12em; color: hsl(var(--arterial));
+}
+.prose-press a { color: hsl(var(--arterial)); text-decoration: underline; text-underline-offset: 3px; transition: none; }
+.prose-press a:hover { background: hsl(var(--arterial)); color: hsl(var(--void)); }
+.prose-press a[target="_blank"]::after { content: " ↗"; }
+.prose-press h2 {
+  font-family: var(--font-display); text-transform: uppercase; font-size: 1.9em;
+  line-height: 1; margin: 2.2em 0 0.8em; counter-increment: h2c;
+}
+.prose-press h2::before { content: counter(h2c, decimal-leading-zero) " - "; color: hsl(var(--arterial)); }
+.prose-press h3 { font-family: var(--font-mono); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; font-size: 0.9em; margin: 2em 0 0.6em; }
+.prose-press ul, .prose-press ol { padding-left: 1.5em; margin: 1.25em 0; }
+.prose-press li { margin: 0.4em 0; }
+.prose-press li::marker { color: hsl(var(--arterial)); }
+.prose-press hr { border: 0; border-top: 1px solid hsl(var(--border)); margin: 3em 0; }
+.prose-press code:not(pre code) {
+  background: hsl(var(--void)); border: 1px solid hsl(var(--border)); padding: 0.1em 0.35em; font-size: 0.85em;
+}
+.prose-press table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 1.5em 0; }
+.prose-press th, .prose-press td { border: 1px solid hsl(var(--border)); padding: 0.5em 0.75em; text-align: left; }
+.prose-press th { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+/* marginalia: blockquotes become editor's side-notes */
+.prose-press .margin-note {
+  border-left: 2px solid hsl(var(--arterial)); padding: 0.25em 0 0.25em 1em;
+  color: hsl(var(--graphite)); font-style: italic; font-size: 14px; margin: 1.5em 0;
+}
+.prose-press .margin-note::before { content: "† "; color: hsl(var(--arterial)); font-style: normal; }
+@media (min-width: 1280px) {
+  .article-grid { padding-right: 19rem; position: relative; }
+  .article-grid .margin-note {
+    float: right; clear: right; width: 16rem; margin: 0 -19rem 1.5em 0;
+    border-left: 1px solid hsl(var(--border)); font-size: 12.5px; line-height: 1.6;
   }
 }
+.press-fig { margin: 2em 0; }
+.press-fig img { width: 100%; filter: grayscale(1) contrast(1.15) brightness(0.9); border: 1px solid hsl(var(--border)); }
+.press-fig figcaption { margin-top: 0.6em; }
 
-/* Cyberpunk-inspired animations */
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
+/* interactive demo mount points inside writeups (hydrated by <WriteupDemos/>) */
+.demo-slot { margin: 2.5em 0; }
+/* demos are portaled inside .prose-press; keep prose link/list styling from bleeding in */
+.demo-slot a { text-decoration: none; }
+.demo-slot ul, .demo-slot ol { padding: 0; margin: 0; list-style: none; }
+.demo-slot li { margin: 0; }
+.demo-slot li::marker { content: ""; }
+
+/* ---------- print: the hard copy (graft: EYES ONLY) ---------- */
+@media print {
+  body { background: #E8E6E0 !important; color: #0B0B0B !important; }
+  .ticker-track, .blink, .marquee { animation: none !important; }
+  [data-grain], [data-shell], [data-boot], .skip-link, .barcode, .stamp[data-in] { display: none !important; }
+  .redact { background: #000 !important; color: #000 !important; } /* print keeps secrets */
+  .only-print { display: block !important; }
+  main > section { transform: none !important; }
+  .ghost-numeral { -webkit-text-stroke: 1px #999; }
+  a { color: #0B0B0B; }
+}
+
+/* ---------- reduced motion (contractual, see §7) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    transform: translate(-2px, -2px);
-  }
-  60% {
-    transform: translate(2px, 2px);
-  }
-  80% {
-    transform: translate(2px, -2px);
-  }
-  100% {
-    transform: translate(0);
-  }
-}
-
-@keyframes neonFlicker {
-  0%,
-  19%,
-  21%,
-  23%,
-  25%,
-  54%,
-  56%,
-  100% {
-    text-shadow: 0 0 5px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.5), 0 0 15px
-      hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary)), 0 0 35px hsl(var(--primary)), 0 0 40px
-      hsl(var(--primary));
-  }
-  20%,
-  24%,
-  55% {
-    text-shadow: none;
-  }
-}
-
-@keyframes borderGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 5px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.3);
-  }
-  50% {
-    box-shadow: 0 0 10px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--primary) / 0.5), 0 0 30px
-      hsl(var(--primary) / 0.3);
-  }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-glitch {
-  animation: glitch 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
-
-.animate-neon-flicker {
-  animation: neonFlicker 1.5s infinite alternate;
-}
-
-.animate-border-glow {
-  animation: borderGlow 2s infinite;
-}
-
-/* Cyberpunk-specific styles */
-.dark .cyberpunk-text {
-  @apply text-primary font-bold;
-  text-shadow: 0 0 5px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.5);
-}
-
-.dark .cyberpunk-card {
-  @apply border-primary/30 bg-card/80;
-  box-shadow: 0 0 10px hsl(var(--primary) / 0.2), inset 0 0 15px hsl(var(--primary) / 0.1);
-}
-
-.dark .cyberpunk-glow {
-  text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
-}
-
-.dark .cyberpunk-border {
-  @apply border-primary/40;
-  box-shadow: 0 0 5px hsl(var(--primary) / 0.3);
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Scrollbar styling */
-.dark ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.5);
-  border-radius: 4px;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8);
+  html { scroll-behavior: auto; }
+  .ticker-track { animation: none !important; transform: none !important; }
+  .marquee { display: none !important; }
+  .toc-row:hover .row-title { visibility: visible !important; }
 }

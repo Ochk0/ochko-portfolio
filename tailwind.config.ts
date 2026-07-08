@@ -53,6 +53,17 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // SAMIZDAT semantic aliases — components MUST use these, never raw hex
+        tar: "hsl(var(--background))",
+        newsprint: "hsl(var(--foreground))",
+        graphite: "hsl(var(--graphite))",
+        arterial: "hsl(var(--arterial))",
+        rule: "hsl(var(--border))",
+        void: "hsl(var(--void))",
+      },
+      fontFamily: {
+        display: ["var(--font-display)"],
+        mono: ["var(--font-mono)"],
       },
       borderRadius: {
         lg: "var(--radius)",
